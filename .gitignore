@@ -40,3 +40,6 @@
 
 # Ignore js tests
 /coverage
+
+# Ignore private vscode settings(for now)
+.vscode
