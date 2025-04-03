@@ -25,6 +25,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "dotenv-rails", "~> 3.1"
   gem "factory_bot_rails", "~> 6.4"
+  gem "erb_lint"
 end
 
 group :development do
