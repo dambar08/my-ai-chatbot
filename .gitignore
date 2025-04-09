@@ -37,6 +37,7 @@
 !/app/assets/builds/.keep
 
 /node_modules
+/vendor
 
 # Ignore js tests
 /coverage
