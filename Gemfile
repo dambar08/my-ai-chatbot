@@ -33,6 +33,8 @@ end
 
 group :development do
   gem "web-console" # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "guard-rails", "~> 0.8.1"
+  gem "guard-rspec", "~> 4.7"
 end
 
 group :test do
