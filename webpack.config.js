@@ -1,13 +1,15 @@
 const path = require("path");
 const webpack = require("webpack");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const devMode = process.env.NODE_ENV !== "production";
+const devMode = process.env.NODE_ENV !== "production";
 
 const {
   defineReactCompilerLoaderOption,
   reactCompilerLoader,
 } = require("react-compiler-webpack");
 const child_process = require("child_process");
+// const { watchFile } = require("fs");
 
 function git(command) {
   return child_process.execSync(`git ${command}`, { encoding: "utf8" }).trim();
@@ -15,9 +17,10 @@ function git(command) {
 
 module.exports = {
   mode: "production",
+  cache: false,
   devtool: "source-map",
   entry: {
-    application: "./app/javascript/application.js",
+    application: "./app/javascript/application.ts",
   },
   output: {
     filename: "[name].js",
@@ -27,7 +30,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, './app/javascript/src'),
+      '~controllers': path.resolve(__dirname, './app/javascript/controllers'),
+      '~': path.resolve(__dirname, './app/javascript/src'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
@@ -54,9 +58,6 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env']
-          }
         }
       },
       {
@@ -67,6 +68,9 @@ module.exports = {
           // If you are using rspack, the rspack's buiilt-in react transformation is sufficient.
           // { loader: 'swc-loader' },
           // Now add reactCompilerLoader
+          {
+            loader: "babel-loader",
+          },
           {
             loader: reactCompilerLoader,
             options: defineReactCompilerLoaderOption({
@@ -79,6 +83,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
+    new ForkTsCheckerWebpackPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
