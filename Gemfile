@@ -21,6 +21,7 @@ gem "image_processing", "~> 1.2" # Use Active Storage variants [https://guides.r
 gem "annotate", "~> 2.6"
 gem "pundit", "~> 2.5"
 gem "rolify", "~> 6.0"
+gem "responders", "~> 3.1"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude" # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
