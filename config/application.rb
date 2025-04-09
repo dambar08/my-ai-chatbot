@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv::Railtie.load if Rails.env.test? || Rails.env.development?
+Dotenv::Rails.load if Rails.env.test? || Rails.env.development?
 
 module MyAiChatbot
   class Application < Rails::Application
