@@ -1,0 +1,24 @@
+services:
+  postgresql:
+    restart: always
+    extends:
+      file: ./postgresql.yml
+      service: postgresql
+    networks:
+      - my_ai_chatbot_network
+
+  web:
+    build: ./..
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgresql
+    networks:
+      - my_ai_chatbot_network
+
+networks:
+  my_ai_chatbot_network:
+    driver: bridge
