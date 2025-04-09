@@ -1,5 +1,6 @@
 {
-  "name": "app",
+  "name": "my-ai-chatbot",
+  "version": "0.0.1",
   "private": true,
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "author": {
@@ -14,7 +15,7 @@
   },
   "licenses": [
     {
-      "type": "MIT",
+      "type": "GPL",
       "url": "https://github.com/dambar08/my-ai-chatbot/blob/main/LICENSE"
     }
   ],
@@ -25,15 +26,17 @@
     "@babel/plugin-transform-destructuring": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
-    "@babel/preset-typescript": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.27.0",
     "@biomejs/biome": "^1.9.4",
     "@playwright/test": "^1.51.1",
     "@react-router/dev": "^7.4.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/d3-scale": "^4.0.9",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.14.0",
     "@types/papaparse": "^5.3.15",
     "@types/pdf-parse": "^1.1.4",
     "@types/react": "^19.0.12",
@@ -44,15 +47,22 @@
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^4.2.2",
+    "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-tailwindcss": "^3.18.0",
+    "fork-ts-checker-webpack-plugin": "^9.1.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "react-compiler-webpack": "^0.2.0",
     "react-hook-form": "^7.55.0",
     "react-router-devtools": "^1.1.6",
     "redux-mock-store": "^1.5.5",
     "sinon": "^20.0.0",
+    "ts-jest": "^29.3.1",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vite": "^6.2.4",
@@ -65,16 +75,24 @@
     "compose:services:up": "docker-compose -f docker/services.yml up -d",
     "compose:services:down": "docker-compose -f docker/services.yml down",
     "build": "webpack --config webpack.config.js",
-    "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+    "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
+    "cy:install": "cypress install",
+    "cy": "cypress open",
+    "cy:run": "cypress run --headless --browser chrome",
+    "cy:open": "cypress open --browser chrome",
+    "test": "jest app/javascript/ bin/ --coverage",
+    "test:ci": "jest app/javascript/ bin/ --ci",
+    "test:watch": "jest app/javascript/ bin/ --watch"
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-react": "^7.26.3",
     "@codemirror/lang-javascript": "^6.2.3",
     "@codemirror/lang-python": "^6.1.7",
     "@codemirror/state": "^6.5.2",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.36.4",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.13",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -100,6 +118,7 @@
     "clsx": "^2.1.1",
     "codemirror": "^6.0.1",
     "css-loader": "^7.1.2",
+    "cypress": "^14.2.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "diff-match-patch": "^1.0.5",
@@ -110,6 +129,7 @@
     "i18next-browser-languagedetector": "^8.0.4",
     "i18next-http-backend": "^3.0.2",
     "isbot": "^5.1.25",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.483.0",
     "nanoid": "^5.1.5",
     "orderedmap": "^2.1.1",
@@ -130,22 +150,51 @@
     "react-loadable": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
-    "react-redux-loading-bar": "^5.0.8",
     "react-resizable-panels": "^2.1.7",
     "react-router": "^7.4.0",
     "react-router-dom": "^7.4.0",
     "react-toastify": "^11.0.5",
     "reactstrap": "^9.2.3",
+    "redux": "^5.0.1",
     "remark-gfm": "^4.0.1",
-    "sonner": "^2.0.1",
+    "sonner": "^2.0.3",
     "swr": "^2.3.3",
-    "tailwind-merge": "^3.0.2",
-    "tailwindcss": "^4.0.15",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4.1.2",
     "tailwindcss-animate": "^1.0.7",
     "ts-loader": "^9.5.2",
     "usehooks-ts": "^3.1.1",
     "uuid": "^11.1.0",
     "web-vitals": "^4.2.4",
     "zod": "^3.24.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "app/javascript/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not IE <= 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
