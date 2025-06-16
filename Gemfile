@@ -28,7 +28,7 @@ group :development, :test do
   gem "brakeman", require: false # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "rubocop-rails-omakase", require: false # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "dotenv-rails", "~> 3.1"
-  gem "factory_bot_rails", "~> 6.4"
+  gem "factory_bot_rails", "~> 6.5"
   gem "erb_lint"
 end
 
